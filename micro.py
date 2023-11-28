@@ -28,7 +28,7 @@ def get_prerequisites(crn):
 
 
 if len(sys.argv) != 2:
-    print("Usage: python microservice.py <CRN>")
+    print("Usage: python micro.py <CRN>")
     sys.exit(1)
 
 # Extract CRN with command-line
