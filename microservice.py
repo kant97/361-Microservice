@@ -2,11 +2,12 @@ import requests
 import csv
 import json
 import sys
+import re
 
 
 def get_prerequisites(crn):
     lookup_url = 'https://classes.oregonstate.edu/api/?page=fose&route=details'
-    lookup_payload = {'group': 'code:CS 362', 'key': f'crn:{crn}', 'srcdb': '202400', 'matched': f'crn:{crn}'}
+    lookup_payload = {'key': f'crn:{crn}'}
 
     encoded_payload = json.dumps(lookup_payload)
 
@@ -17,6 +18,7 @@ def get_prerequisites(crn):
             course_data = response.json()
 
             registration_restrictions = course_data.get('registration_restrictions', {})
+            registration_restrictions = re.sub(r'<[^>]*>', '', registration_restrictions)
 
             return registration_restrictions
         except json.JSONDecodeError as e:
